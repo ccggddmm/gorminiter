@@ -5,7 +5,7 @@ Auto generating gorm init file. Helping developeer to build gorm structrure.
 
 Usage: 
 
-    ./gorminiter [options]
+    ./gorminiter [-h] [options]
 
 
 Parameters:
@@ -16,4 +16,3 @@ Parameters:
 	-password database password, default no password
 	-bdname	  database name
 	-table 	  table name
-    -dir 	  file to put 

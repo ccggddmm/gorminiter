@@ -34,7 +34,7 @@ func InitDB(host string, port int, username, password, databaseName string)  {
 	db.SetConnMaxLifetime(1)
 
 	if err := db.Ping(); err != nil{
-		log.Fatal("Open DB failed, err is ", err)
+		log.Fatal("Open DB failed, ", err)
 	}
 	log.Println("DB connnect success")
 }

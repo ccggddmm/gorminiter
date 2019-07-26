@@ -10,29 +10,33 @@ import (
 
 
 var (
-	//cmd  	 string
+	h        bool
+	f		 bool
 	host     string
 	port     int
 	user     string
 	password string
 	dbname   string
 	table 	 string
-	//dir		 string
 )
 
 
 //InitDB(host string, port int, username, password, databaseName string)
 func main() {
+	flag.BoolVar(&h, "h", false, "help")
+	flag.BoolVar(&f, "f", false, "generate init file")
 	flag.StringVar(&host, "host", "127.0.0.1", "database host, default locolhost")
 	flag.IntVar(&port, "port", 3306, "database port number, default 3306")
 	flag.StringVar(&user, "user", "root", "database user name, default root")
 	flag.StringVar(&password, "password", "", "database password, default no password")
 	flag.StringVar(&dbname, "dbname", "", "database name")
 	flag.StringVar(&table, "table", "", "table name")
-	//flag.StringVar(&dir, "dir", "./", "generate file path, default current path")
 
 	flag.Parse()
 
+	if h {
+		usage()
+	}
 	//todo format check
 	//todo file gen or print on console
 /*	if host == "" {
@@ -43,14 +47,26 @@ func main() {
 		fmt.Fprintln(os.Stderr, "invalid port number")
 		usage()
 	}*/
+	if f {
 
-	execute()
+	} else {
+		report()
+	}
+
+}
+
+
+func report() {
+	fmt.Println(host, port, user, password, dbname, table)
+	lib.InitDB(host, port, user, password, dbname)
+	gormStr := lib.BuildStruct(lib.GetColumnAndType(table))
+	fmt.Println("\n", gormStr)
 }
 
 
 func usage() {
 	s := `
-Usage: ./gorminiter [options]
+Usage: ./gorminiter [-h] [options]
 
 Parameters:
 	-host	  database host, default locolhost
@@ -64,11 +80,4 @@ Parameters:
 	fmt.Fprintln(os.Stderr, os.Args[0], s)
 	flag.PrintDefaults()
 	os.Exit(-1)
-}
-
-
-func execute() {
-	lib.InitDB(host, port, user, password, dbname)
-	gormStr := lib.BuildStruct(lib.GetColumnAndType(table))
-	fmt.Println(gormStr)
 }
