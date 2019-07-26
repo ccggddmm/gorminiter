@@ -16,3 +16,9 @@ Parameters:
 	-password database password, default no password
 	-bdname	  database name
 	-table 	  table name
+
+Todo:
+
+    Add primary key
+    Add comment
+    Generate dao file
