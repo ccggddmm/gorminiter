@@ -1,4 +1,4 @@
-package main
+package lib
 
 import (
 	"bytes"
@@ -22,14 +22,16 @@ var typemap = map[string]string {
 
 func BuildStruct(table *Table) string {
 	var modelStr string
-	modelStr = fmt.Sprintf("type %v struct { /n", (*table).Name)
+	modelStr = fmt.Sprintf("type %v struct { \n", camel2underscore((*table).Name))
+
 	for _, info := range (*table).Columns {
-		modelStr += fmt.Sprintf("%v %v /`gorm:%v/` /n", underscore2camel(info.Name), typemap[info.Coltype], info.Name)
+		modelStr += fmt.Sprintf("\t%v %v `gorm:%v` \n", underscore2camel(info.Name), typemap[info.Coltype], info.Name)
 	}
-	modelStr += "} /n"
+
+	modelStr += "} \n"
+
 	return modelStr
 }
-
 
 func camel2underscore(name string) string {
 	buffer := bytes.NewBufferString("")

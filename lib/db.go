@@ -1,4 +1,4 @@
-package main
+package lib
 
 import (
 	_ "github.com/go-sql-driver/mysql"
@@ -23,7 +23,11 @@ type Column struct {
 }
 
 func InitDB(host string, port int, username, password, databaseName string)  {
-	connStr := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?", username, password, host, port, databaseName)
+	var connStr string
+	if password == "" {
+		connStr = fmt.Sprintf("%s@tcp(%s:%d)/%s?", username, host, port, databaseName)
+	}
+	connStr = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?", username, password, host, port, databaseName)
 
 	db, _ = sql.Open("mysql", connStr)
 
