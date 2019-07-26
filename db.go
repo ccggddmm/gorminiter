@@ -12,9 +12,14 @@ var (
 	db *sql.DB
 )
 
-type TableInfo struct {
-	column_name string
-	column_type string
+type Table struct {
+	Name string
+	Columns []Column
+}
+
+type Column struct {
+	Name string
+	Coltype string
 }
 
 func InitDB(host string, port int, username, password, databaseName string)  {
@@ -30,28 +35,27 @@ func InitDB(host string, port int, username, password, databaseName string)  {
 	log.Println("DB connnect success")
 }
 
-func GetColumnAndType(tablename string) *[]TableInfo{
+func GetColumnAndType(tablename string) *Table{
 	query := `select COLUMN_NAME,DATA_TYPE from information_schema.COLUMNS where table_name = ?`
 
 	rows, err := db.Query(query, tablename)
 	if err != nil {
 		log.Fatal("Query DB failed, err is ", err)
 	}
-
 	defer rows.Close()
 
-	var result []TableInfo
+	var columns []Column
+
 	for rows.Next() {
 		var (
-			column_name   	string
-			column_type 	string
+			name   	string
+			coltype 	string
 		)
-		err := rows.Scan(&column_name, &column_type)
+		err := rows.Scan(&name, &coltype)
 		if err != nil {
 			log.Fatal(err)
 		}
-
-		result = append(result, TableInfo{column_name, column_type})
+		columns = append(columns, Column{name, coltype})
 	}
 
 	err = rows.Err()
@@ -59,8 +63,9 @@ func GetColumnAndType(tablename string) *[]TableInfo{
 		log.Fatal(err)
 	}
 
-	if result != nil {
-		return &result
+	return &Table{
+		Name: tablename,
+		Columns: columns,
 	}
-	return nil
+
 }
