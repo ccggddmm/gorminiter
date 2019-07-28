@@ -1,25 +1,24 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"net"
 	"os"
 
-	"flag"
 	"github.com/ccggddmm/gorminiter/lib"
 )
 
-
 var (
 	h        bool
-	f		 bool
+	f        bool
 	host     string
 	port     int
 	user     string
 	password string
 	dbname   string
-	table 	 string
+	table    string
 )
-
 
 //InitDB(host string, port int, username, password, databaseName string)
 func main() {
@@ -37,24 +36,18 @@ func main() {
 	if h {
 		usage()
 	}
-	//todo format check
 	//todo file gen or print on console
-/*	if host == "" {
-		fmt.Fprintln(os.Stderr, "invalid host")
-		usage()
-	}
-	if port < 0 {
-		fmt.Fprintln(os.Stderr, "invalid port number")
-		usage()
-	}*/
 	if f {
-
+		geniniter()
 	} else {
 		report()
 	}
 
 }
 
+func geniniter() {
+
+}
 
 func report() {
 	fmt.Println(host, port, user, password, dbname, table)
@@ -62,7 +55,6 @@ func report() {
 	gormStr := lib.BuildStruct(lib.GetColumnAndType(table))
 	fmt.Println("\n", gormStr)
 }
-
 
 func usage() {
 	s := `
@@ -80,4 +72,23 @@ Parameters:
 	fmt.Fprintln(os.Stderr, os.Args[0], s)
 	flag.PrintDefaults()
 	os.Exit(-1)
+}
+
+func check() {
+	if net.ParseIP(host) == nil {
+		fmt.Fprintln(os.Stderr, "invalid ip")
+		usage()
+	}
+	if port < 0 {
+		fmt.Fprintln(os.Stderr, "invalid port number")
+		usage()
+	}
+	if dbname == "" {
+		fmt.Fprintln(os.Stderr, "please input db name")
+		usage()
+	}
+	if table == "" {
+		fmt.Fprintln(os.Stderr, "please input table name")
+		usage()
+	}
 }

@@ -7,17 +7,17 @@ import (
 	"unicode"
 )
 
-var typemap = map[string]string {
-	"smallint":"int8",
-	"mediumint":"int16",
-	"int":"int32",
-	"bigint":"int64",
-	"float":"float32",
-	"double":"float64",
-	"varchar":"string",
-	"boolean":"bool",
-	"timestamp":"time.Time",
-	"date":"time.Time",
+var typemap = map[string]string{
+	"smallint":  "int8",
+	"mediumint": "int16",
+	"int":       "int32",
+	"bigint":    "int64",
+	"float":     "float32",
+	"double":    "float64",
+	"varchar":   "string",
+	"boolean":   "bool",
+	"timestamp": "time.Time",
+	"date":      "time.Time",
 }
 
 func BuildStruct(table *Table) string {

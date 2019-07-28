@@ -1,11 +1,11 @@
 package lib
 
 import (
-	_ "github.com/go-sql-driver/mysql"
-
 	"database/sql"
 	"fmt"
 	"log"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var (
@@ -13,16 +13,16 @@ var (
 )
 
 type Table struct {
-	Name string
+	Name    string
 	Columns []Column
 }
 
 type Column struct {
-	Name string
+	Name    string
 	Coltype string
 }
 
-func InitDB(host string, port int, username, password, databaseName string)  {
+func InitDB(host string, port int, username, password, databaseName string) {
 	var connStr string
 	if password == "" {
 		connStr = fmt.Sprintf("%s@tcp(%s:%d)/%s?", username, host, port, databaseName)
@@ -33,13 +33,13 @@ func InitDB(host string, port int, username, password, databaseName string)  {
 
 	db.SetConnMaxLifetime(1)
 
-	if err := db.Ping(); err != nil{
+	if err := db.Ping(); err != nil {
 		log.Fatal("Open DB failed, ", err)
 	}
 	log.Println("DB connnect success")
 }
 
-func GetColumnAndType(tablename string) *Table{
+func GetColumnAndType(tablename string) *Table {
 	query := `select COLUMN_NAME,DATA_TYPE from information_schema.COLUMNS where table_name = ?`
 
 	rows, err := db.Query(query, tablename)
@@ -52,8 +52,8 @@ func GetColumnAndType(tablename string) *Table{
 
 	for rows.Next() {
 		var (
-			name   	string
-			coltype 	string
+			name    string
+			coltype string
 		)
 		err := rows.Scan(&name, &coltype)
 		if err != nil {
@@ -68,7 +68,7 @@ func GetColumnAndType(tablename string) *Table{
 	}
 
 	return &Table{
-		Name: tablename,
+		Name:    tablename,
 		Columns: columns,
 	}
 
