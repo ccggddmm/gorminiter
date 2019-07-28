@@ -25,7 +25,11 @@ func BuildStruct(table *Table) string {
 	modelStr = fmt.Sprintf("type %v struct { \n", camel2underscore((*table).Name))
 
 	for _, info := range (*table).Columns {
-		modelStr += fmt.Sprintf("\t%v %v `gorm:%v` \n", underscore2camel(info.Name), typemap[info.Coltype], info.Name)
+		var pkstr string = ""
+		if info.IsPK() {
+			pkstr = ";primary_key"
+		}
+		modelStr += fmt.Sprintf("\t%v %v `gorm:%v%v` \n", underscore2camel(info.Name), typemap[info.Datatype], info.Name, pkstr)
 	}
 
 	modelStr += "} \n"

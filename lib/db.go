@@ -18,8 +18,16 @@ type Table struct {
 }
 
 type Column struct {
-	Name    string
-	Coltype string
+	Name     string
+	Datatype string
+	Key      string
+}
+
+func (c Column) IsPK() bool {
+	if c.Key == "PRI" {
+		return true
+	}
+	return false
 }
 
 func InitDB(host string, port int, username, password, databaseName string) {
@@ -29,6 +37,7 @@ func InitDB(host string, port int, username, password, databaseName string) {
 	}
 	connStr = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?", username, password, host, port, databaseName)
 
+	fmt.Println(connStr)
 	db, _ = sql.Open("mysql", connStr)
 
 	db.SetConnMaxLifetime(1)
@@ -40,7 +49,7 @@ func InitDB(host string, port int, username, password, databaseName string) {
 }
 
 func GetColumnAndType(tablename string) *Table {
-	query := `select COLUMN_NAME,DATA_TYPE from information_schema.COLUMNS where table_name = ?`
+	query := `select COLUMN_NAME,DATA_TYPE,COLUMN_KEY from information_schema.COLUMNS where table_name = ?`
 
 	rows, err := db.Query(query, tablename)
 	if err != nil {
@@ -52,14 +61,15 @@ func GetColumnAndType(tablename string) *Table {
 
 	for rows.Next() {
 		var (
-			name    string
-			coltype string
+			name     string
+			datatype string
+			key      string
 		)
-		err := rows.Scan(&name, &coltype)
+		err := rows.Scan(&name, &datatype, &key)
 		if err != nil {
 			log.Fatal(err)
 		}
-		columns = append(columns, Column{name, coltype})
+		columns = append(columns, Column{name, datatype, key})
 	}
 
 	err = rows.Err()

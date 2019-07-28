@@ -50,7 +50,6 @@ func geniniter() {
 }
 
 func report() {
-	fmt.Println(host, port, user, password, dbname, table)
 	lib.InitDB(host, port, user, password, dbname)
 	gormStr := lib.BuildStruct(lib.GetColumnAndType(table))
 	fmt.Println("\n", gormStr)
