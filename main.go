@@ -20,7 +20,6 @@ var (
 	table    string
 )
 
-//InitDB(host string, port int, username, password, databaseName string)
 func main() {
 	flag.BoolVar(&h, "h", false, "help")
 	flag.BoolVar(&f, "f", false, "generate init file")
@@ -37,6 +36,7 @@ func main() {
 		usage()
 	}
 	//todo file gen or print on console
+	lib.InitDB(host, port, user, password, dbname)
 	if f {
 		geniniter()
 	} else {
@@ -50,8 +50,7 @@ func geniniter() {
 }
 
 func report() {
-	lib.InitDB(host, port, user, password, dbname)
-	gormStr := lib.BuildStruct(lib.GetColumnAndType(table))
+	gormStr := lib.BuildStruct(lib.GetTable(table))
 	fmt.Println("\n", gormStr)
 }
 

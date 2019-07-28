@@ -7,6 +7,7 @@ import (
 	"unicode"
 )
 
+//todo 字段映射表可配置
 var typemap = map[string]string{
 	"smallint":  "int8",
 	"mediumint": "int16",
@@ -20,21 +21,28 @@ var typemap = map[string]string{
 	"date":      "time.Time",
 }
 
+func BuildFile(table *Table) {
+
+}
+
 func BuildStruct(table *Table) string {
-	var modelStr string
-	modelStr = fmt.Sprintf("type %v struct { \n", camel2underscore((*table).Name))
+	var buf bytes.Buffer
+	buf.WriteString("type ")
+	buf.WriteString(camel2underscore((*table).Name))
+	buf.WriteString(" struct { \n")
 
 	for _, info := range (*table).Columns {
 		var pkstr string = ""
 		if info.IsPK() {
 			pkstr = ";primary_key"
 		}
-		modelStr += fmt.Sprintf("\t%v %v `gorm:%v%v` \n", underscore2camel(info.Name), typemap[info.Datatype], info.Name, pkstr)
+		tmpstr := fmt.Sprintf("\t%v %v `gorm:\"column:%v%v\"` \n",
+			underscore2camel(info.Name), typemap[info.Datatype], info.Name, pkstr)
+		buf.WriteString(tmpstr)
 	}
+	buf.WriteString("} \n")
 
-	modelStr += "} \n"
-
-	return modelStr
+	return buf.String()
 }
 
 func camel2underscore(name string) string {

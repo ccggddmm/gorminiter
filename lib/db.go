@@ -48,7 +48,7 @@ func InitDB(host string, port int, username, password, databaseName string) {
 	log.Println("DB connnect success")
 }
 
-func GetColumnAndType(tablename string) *Table {
+func GetTable(tablename string) *Table {
 	query := `select COLUMN_NAME,DATA_TYPE,COLUMN_KEY from information_schema.COLUMNS where table_name = ?`
 
 	rows, err := db.Query(query, tablename)
