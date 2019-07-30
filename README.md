@@ -33,7 +33,7 @@ Example 1 :
 
     >>DB connnect success
 
-     type Table struct { 
+     type Mytable struct { 
             Id int64 `gorm:id` 
             UserName string `gorm:user_name` 
             Status string `gorm:status` 
@@ -48,7 +48,7 @@ Example 2 :
 
     >>DB connnect success
 
-     type Table struct { 
+     type Mytable struct { 
             Id int64 `gorm:id` 
             UserName string `gorm:user_name` 
             Status string `gorm:status` 
@@ -80,7 +80,7 @@ gorminiter是一款可以通过配置mysql信息，自动登陆mysql获取数据
 	-port	    数据库端口号, 默认值: 3306
 	-username   用户名, 默认值: root
 	-password   密码 , 默认密码为空
-	-bd	        数据库名
+	-bd         数据库名
 	-table 	    数据表名
 
 模式:
@@ -97,7 +97,7 @@ Example 1 :
 
     >>DB connnect success
 
-     type Table struct { 
+     type Mytable struct { 
             Id int64 `gorm:id` 
             UserName string `gorm:user_name` 
             Status string `gorm:status` 
@@ -106,13 +106,15 @@ Example 1 :
 
 使用配置文件
 
+配置文件是当前目录下setting.json, 执行./gorminiter -c如果当前目录没有配置文件，工具会帮你自动生成模版，修改模版配置文件即可。
+
 Example 2 :
     
     ./gorminiter -c
 
     >>DB connnect success
 
-     type Table struct { 
+     type Mytable struct { 
             Id int64 `gorm:id` 
             UserName string `gorm:user_name` 
             Status string `gorm:status` 
