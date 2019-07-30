@@ -1,7 +1,10 @@
+language: [English](###Introduction), [中文](###介绍)
+
 # **Gorminiter**
 
-### Introduction
+###Introduction
 Auto generating gorm init file. Helping developeer to build gorm structrure.
+:blush:
 
 Usage: 
 
@@ -58,3 +61,6 @@ Todo:
 
     Add comment
     Generate dao file
+    
+
+###介绍
