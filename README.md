@@ -6,7 +6,16 @@ language: [English](#Introduction), [中文](#介绍)
 Auto generating gorm init file. Helping developers to build gorm structrure.
 :blush:
 
-Usage: 
+###Install
+
+    git clone https://github.com/ccggddmm/gorminiter.git
+    go install
+
+For Mac User
+
+    Just copy gorminiter, and use.
+    
+###Usage
 
     ./gorminiter [-hfc] [options]
 
@@ -70,8 +79,16 @@ Todo:
 gorminiter是一款可以通过配置mysql信息，自动登陆mysql获取数据表信息并自动生成对应gorm结构体的工具。
 支持命令配置，文件配置。
 
+###安装说明
 
-使用说明: 
+    git clone https://github.com/ccggddmm/gorminiter.git
+    go install
+
+Mac用户：
+
+    复制可执行文件直接使用
+
+###使用说明
 
     ./gorminiter [-hfc] [options]
 
@@ -83,7 +100,7 @@ gorminiter是一款可以通过配置mysql信息，自动登陆mysql获取数据
 	-bd         数据库名
 	-table 	    数据表名
 
-模式:
+模式：
 
     -c : 使用配置文件配置参数
     -f : 生成gorm是数据库操作模版文件 存放位置./your_table_name.go
