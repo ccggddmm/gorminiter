@@ -3,7 +3,7 @@ language: [English](#Introduction), [中文](#介绍)
 # **Gorminiter**
 
 ### Introduction
-Auto generating gorm init file. Helping developeer to build gorm structrure.
+Auto generating gorm init file. Helping developers to build gorm structrure.
 :blush:
 
 Usage: 
@@ -64,3 +64,58 @@ Todo:
     
 
 ### 介绍
+
+用golang做服务端，使用gorm操作数据库，发现要手动撸操作数据库的接口体？数据库有很多字段？
+别崩溃，gorminiter帮你搞定！
+gorminiter是一款可以通过配置mysql信息，自动登陆mysql获取数据表信息并自动生成对应gorm结构体的工具。
+支持命令配置，文件配置。
+
+
+使用说明: 
+
+    ./gorminiter [-hfc] [options]
+
+
+	-host	    数据库ip，默认值: locolhost
+	-port	    数据库端口号, 默认值: 3306
+	-username   用户名, 默认值: root
+	-password   密码 , 默认密码为空
+	-bd	        数据库名
+	-table 	    数据表名
+
+模式:
+
+    -c : 使用配置文件配置参数
+    -f : 生成gorm是数据库操作模版文件 存放位置./your_table_name.go
+    -h : 帮助
+
+普通模式
+
+Example 1 :
+    
+    ./gorminiter -port 3306 -host 127.0.0.1  -db mydb -password password -table mytable
+
+    >>DB connnect success
+
+     type Table struct { 
+            Id int64 `gorm:id` 
+            UserName string `gorm:user_name` 
+            Status string `gorm:status` 
+            UpdateTime time.Time `gorm:update_time` 
+    } 
+
+使用配置文件
+
+Example 2 :
+    
+    ./gorminiter -c
+
+    >>DB connnect success
+
+     type Table struct { 
+            Id int64 `gorm:id` 
+            UserName string `gorm:user_name` 
+            Status string `gorm:status` 
+            UpdateTime time.Time `gorm:update_time` 
+    } 
+
