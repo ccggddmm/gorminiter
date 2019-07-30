@@ -5,23 +5,30 @@ Auto generating gorm init file. Helping developeer to build gorm structrure.
 
 Usage: 
 
-    ./gorminiter [-h] [options]
+    ./gorminiter [-hfc] [options]
 
-
-Parameters:
+Options:
 
 	-host	  database host, defaul: locolhost
 	-port	  database port number, default: 3306
 	-username database user name, default: root
 	-password database password, default no password
-	-bdname	  database name
+	-bd	  database name
 	-table 	  table name
 
-Example:
-    
-    ./gorminiter -port 3306 -host 127.0.0.1  -dbname mydb -password password -table mytable
+Pattern:
 
-    >>2019/07/26 20:37:23 DB connnect success
+    -c : Use config file to set parameters
+    -f : Gen file on ./your_table_name.go
+    -h : Show usage
+
+without -c and -f.
+   
+Example 1 :
+    
+    ./gorminiter -port 3306 -host 127.0.0.1  -db mydb -password password -table mytable
+
+    >>DB connnect success
 
      type Table struct { 
             Id int64 `gorm:id` 
@@ -30,8 +37,24 @@ Example:
             UpdateTime time.Time `gorm:update_time` 
     } 
 
+With -c, set your config in setting.json, if there is no file on current dir, gorminiter will generate template file for you.
+
+Example 2 :
+    
+    ./gorminiter -c
+
+    >>DB connnect success
+
+     type Table struct { 
+            Id int64 `gorm:id` 
+            UserName string `gorm:user_name` 
+            Status string `gorm:status` 
+            UpdateTime time.Time `gorm:update_time` 
+    } 
+
+
+
 Todo:
 
-    Add primary key
     Add comment
     Generate dao file
