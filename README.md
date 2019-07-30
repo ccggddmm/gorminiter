@@ -1,4 +1,4 @@
-language: [English](###Introduction), [中文](###介绍)
+language: [English](#Introduction), [中文](#介绍)
 
 # **Gorminiter**
 
