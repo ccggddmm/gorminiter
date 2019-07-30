@@ -33,7 +33,7 @@ Example 1 :
 
     >>DB connnect success
 
-     type Table struct { 
+     type Mytable struct { 
             Id int64 `gorm:id` 
             UserName string `gorm:user_name` 
             Status string `gorm:status` 
@@ -48,7 +48,7 @@ Example 2 :
 
     >>DB connnect success
 
-     type Table struct { 
+     type Mytable struct { 
             Id int64 `gorm:id` 
             UserName string `gorm:user_name` 
             Status string `gorm:status` 
@@ -97,7 +97,7 @@ Example 1 :
 
     >>DB connnect success
 
-     type Table struct { 
+     type Mytable struct { 
             Id int64 `gorm:id` 
             UserName string `gorm:user_name` 
             Status string `gorm:status` 
@@ -106,13 +106,15 @@ Example 1 :
 
 使用配置文件
 
+配置文件是当前目录下setting.json, 执行./gorminiter -c如果当前目录没有配置文件，工具会帮你自动生成模版，修改模版配置文件即可。
+
 Example 2 :
     
     ./gorminiter -c
 
     >>DB connnect success
 
-     type Table struct { 
+     type Mytable struct { 
             Id int64 `gorm:id` 
             UserName string `gorm:user_name` 
             Status string `gorm:status` 
